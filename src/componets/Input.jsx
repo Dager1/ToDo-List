@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import ToDo from "./ToDo";
 
 function Input() {
   const [task, setTask] = useState("");
   const [todos, setTodos] = useState([]);
+  const [editTodo, setEditTodo] = useState(null);
+
+  useEffect(() => {
+    if (editTodo) {
+      setTask(editTodo.title);
+    } else {
+      setTask("");
+    }
+  }, [editTodo]);
+
+  const updateTodo = (task, id, completed) => {
+    const newTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, title: task, completed } : todo
+    );
+    setTodos(newTodos);
+    setEditTodo(null);
+  };
 
   const formSubmit = (event) => {
     event.preventDefault();
-    setTodos([...todos, { id: uuidv4(), title: task, completed: false }]);
-    setTask("");
+    if (!editTodo) {
+      setTodos([...todos, { id: uuidv4(), title: task, completed: false }]);
+      setTask("");
+    } else {
+      updateTodo(task, editTodo.id, editTodo.completed);
+    }
   };
+
   return (
     <div>
       <form onSubmit={formSubmit}>
@@ -25,7 +47,7 @@ function Input() {
           Submit
         </button>
       </form>
-      <ToDo todos={todos} setTodos={setTodos} />
+      <ToDo todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
     </div>
   );
 }
