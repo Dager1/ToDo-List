@@ -8,7 +8,7 @@ function Input() {
 
   const formSubmit = (event) => {
     event.preventDefault();
-    setTodos([...todos, { id: uuidv4, title: task, completed: false }]);
+    setTodos([...todos, { id: uuidv4(), title: task, completed: false }]);
     setTask("");
   };
   return (
