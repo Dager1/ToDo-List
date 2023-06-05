@@ -1,8 +1,12 @@
 import React from "react";
 
-function ToDo({ todos, setTodos }) {
+function ToDo({ todos, setTodos, setEditTodo }) {
   const deleteTask = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const handleEdit = (todo) => {
+    setEditTodo(todo);
   };
 
   return (
@@ -15,17 +19,15 @@ function ToDo({ todos, setTodos }) {
             className="border rounded-lg p-2"
           />
           <div className="mt-2">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+            <button
+              onClick={() => handleEdit(todo)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
               Edit
             </button>
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
-              Mark
-            </button>
+
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => deleteTask(todo.id)}>
-              {" "}
-              {/* Pass todo.id as the parameter */}
               Delete
             </button>
           </div>
