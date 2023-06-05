@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import ToDo from "./ToDo";
 
 function Input() {
   const [task, setTask] = useState("");
@@ -24,6 +25,7 @@ function Input() {
           Submit
         </button>
       </form>
+      <ToDo todos={todos} setTodos={setTodos} />
     </div>
   );
 }
